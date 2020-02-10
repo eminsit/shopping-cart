@@ -36,4 +36,25 @@ public class Coupon {
     public void setDiscountType(DiscountType discountType) {
         this.discountType = discountType;
     }
+
+    public Double getDiscountValue(Double amount) {
+        Double discount = 0.0;
+
+        if (discountType == DiscountType.Rate) {
+            discount = (this.discount * amount ) / 100;
+        } else if (discountType == DiscountType.Rate) {
+            discount = amount-this.discount;
+        }
+
+        return discount;
+    }
+
+    @Override
+    public String toString() {
+        return "Coupon{" +
+                "minAmount=" + minAmount +
+                ", discount=" + discount +
+                ", discountType=" + discountType +
+                '}';
+    }
 }

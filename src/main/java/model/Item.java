@@ -28,4 +28,12 @@ public class Item {
     public Double getItemCost() {
         return product.getPrice() * count;
     }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "product=" + product +
+                ", count=" + count +
+                '}';
+    }
 }
