@@ -14,6 +14,7 @@ public class ShoppingCart {
     private Double totalCost;
     private Double campaignDiscount = 0.0;
     private Double couponDiscount = 0.0;
+    private Double totalAmount = 0.0;
 
     private Map<String, List<Item>> categories = new HashMap<String, List<Item>>();
 
@@ -84,13 +85,14 @@ public class ShoppingCart {
                 campaignDiscount = discount;
             }
         }
+        totalAmount = totalCost - campaignDiscount;
     }
 
     public void calculateCouponDiscount() {
         calculateTotalCost();
         calculateCampaignDiscount();
-        Double priceAfterCampaignDiscount = totalCost - campaignDiscount;
-        couponDiscount = coupon.getDiscountValue(priceAfterCampaignDiscount);
+        couponDiscount = coupon.getDiscountValue(totalAmount);
+        totalAmount = totalAmount - campaignDiscount;
     }
 
     @Override
@@ -117,6 +119,8 @@ public class ShoppingCart {
                     ", Totatl Cost: " + item.getItemCost() + "\n";
             }
         }
+        products += "Total Cost: " + totalCost + "\n";
+        products += "Total Amount: " + totalAmount + "\n";
         System.out.println(products);
     }
 
