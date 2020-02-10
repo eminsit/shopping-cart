@@ -39,11 +39,14 @@ public class Coupon {
 
     public Double getDiscountValue(Double amount) {
         Double discount = 0.0;
+        if (minAmount > amount) {
+            return  discount;
+        }
 
         if (discountType == DiscountType.Rate) {
             discount = (this.discount * amount ) / 100;
-        } else if (discountType == DiscountType.Rate) {
-            discount = amount-this.discount;
+        } else if (discountType == DiscountType.Amount) {
+            discount = this.discount;
         }
 
         return discount;

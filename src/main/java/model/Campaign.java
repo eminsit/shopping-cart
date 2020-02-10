@@ -49,11 +49,14 @@ public class Campaign {
 
     public Double getDiscountValue(Item item) {
         Double discount = 0.0;
+        if (item.getProduct().getCategory() != this.category) {
+            return discount;
+        }
 
         if (discountType == DiscountType.Rate) {
             discount = (this.discount * item.getItemCost() ) / 100;
-        } else if (discountType == DiscountType.Rate) {
-            discount = item.getItemCost() - this.discount;
+        } else if (discountType == DiscountType.Amount) {
+            discount = this.discount;
         }
 
         return discount;
