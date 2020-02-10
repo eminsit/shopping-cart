@@ -105,6 +105,21 @@ public class ShoppingCart {
                 '}';
     }
 
+    public void print() {
+        String products = "";
+        for (Map.Entry<String, List<Item>> entry : categories.entrySet()) {
+            String categoryName = entry.getKey();
+            List<Item> itemList = entry.getValue();
+            for (Item item: itemList) {
+                products += "Category: " + categoryName +
+                    ", Product Name: " + item.getProduct().getTitle() +
+                    ", Product Count: " + item.getCount() +
+                    ", Totatl Cost: " + item.getItemCost() + "\n";
+            }
+        }
+        System.out.println(products);
+    }
+
     public List<Item> getItems() {
         return items;
     }

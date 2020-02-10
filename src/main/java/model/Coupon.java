@@ -1,15 +1,18 @@
 package model;
 
+import implement.Discount;
+import implement.DiscountFactory;
 import enums.DiscountType;
 
 public class Coupon {
     private Integer minAmount;
-    private Double discount;
+    private Double discountValue;
     private DiscountType discountType;
+    private Discount discount;
 
-    public Coupon(Integer minAmount, Double discount, DiscountType discountType) {
+    public Coupon(Integer minAmount, Double discountValue, DiscountType discountType) {
         this.minAmount = minAmount;
-        this.discount = discount;
+        this.discountValue = discountValue;
         this.discountType = discountType;
     }
 
@@ -21,12 +24,12 @@ public class Coupon {
         this.minAmount = minAmount;
     }
 
-    public Double getDiscount() {
-        return discount;
+    public Double getDiscountValue() {
+        return discountValue;
     }
 
-    public void setDiscount(Double discount) {
-        this.discount = discount;
+    public void setDiscountValue(Double discountValue) {
+        this.discountValue = discountValue;
     }
 
     public DiscountType getDiscountType() {
@@ -38,18 +41,15 @@ public class Coupon {
     }
 
     public Double getDiscountValue(Double amount) {
-        Double discount = 0.0;
+        Double disc = 0.0;
         if (minAmount > amount) {
-            return  discount;
+            return  disc;
         }
 
-        if (discountType == DiscountType.Rate) {
-            discount = (this.discount * amount ) / 100;
-        } else if (discountType == DiscountType.Amount) {
-            discount = this.discount;
-        }
+        DiscountFactory factory = new DiscountFactory();
+        discount = factory.getDiscount(discountType);
 
-        return discount;
+        return discount.calculate(discountValue, amount);
     }
 
     @Override

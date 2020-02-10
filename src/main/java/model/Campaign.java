@@ -1,16 +1,19 @@
 package model;
 
+import implement.Discount;
+import implement.DiscountFactory;
 import enums.DiscountType;
 
 public class Campaign {
     private Category category;
-    private Double discount;
+    private Double discountValue;
     private Integer itemCount;
     private DiscountType discountType;
+    private Discount discount;
 
     public Campaign(Category category, Double discount, Integer itemCount, DiscountType discountType) {
         this.category = category;
-        this.discount = discount;
+        this.discountValue = discount;
         this.itemCount = itemCount;
         this.discountType = discountType;
     }
@@ -24,11 +27,11 @@ public class Campaign {
     }
 
     public Double getDiscount() {
-        return discount;
+        return discountValue;
     }
 
     public void setDiscount(Double discount) {
-        this.discount = discount;
+        this.discountValue = discount;
     }
 
     public Integer getItemCount() {
@@ -48,25 +51,22 @@ public class Campaign {
     }
 
     public Double getDiscountValue(Item item) {
-        Double discount = 0.0;
+        Double result = 0.0;
         if (item.getProduct().getCategory() != this.category) {
-            return discount;
+            return result;
         }
 
-        if (discountType == DiscountType.Rate) {
-            discount = (this.discount * item.getItemCost() ) / 100;
-        } else if (discountType == DiscountType.Amount) {
-            discount = this.discount;
-        }
+        DiscountFactory factory = new DiscountFactory();
+        discount = factory.getDiscount(discountType);
 
-        return discount;
+        return discount.calculate(discountValue, item.getItemCost());
     }
 
     @Override
     public String toString() {
         return "Campaign{" +
                 "category=" + category +
-                ", discount=" + discount +
+                ", discount=" + discountValue +
                 ", itemCount=" + itemCount +
                 ", discountType=" + discountType +
                 '}';

@@ -22,6 +22,6 @@ public class Main {
         Coupon coupon = new Coupon(100, 10.0, DiscountType.Rate);
         cart.applyCoupon(coupon);
 
-        System.out.println(cart);
+        cart.print();
     }
 }
