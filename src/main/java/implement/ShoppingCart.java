@@ -1,13 +1,14 @@
-package model;
+package implement;
 
 import enums.DiscountType;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ShoppingCart {
+public class ShoppingCart implements Cart{
     private List<Item> items = new ArrayList<Item>();
     private List<Campaign> campaigns = new ArrayList<Campaign>();
     private Coupon coupon;
@@ -18,6 +19,7 @@ public class ShoppingCart {
 
     private Map<String, List<Item>> categories = new HashMap<String, List<Item>>();
 
+    @Override
     public void addItem(Product product, Integer productCount) {
         Item item = new Item(product, productCount);
         Category category = product.getCategory();
@@ -39,6 +41,7 @@ public class ShoppingCart {
         items.add(item);
     }
 
+    @Override
     public void applyDiscounts(Campaign campaign1, Campaign campaign2, Campaign campaign3) {
         campaigns.add(campaign1);
         campaigns.add(campaign2);
@@ -48,6 +51,7 @@ public class ShoppingCart {
         calculateCampaignDiscount();
     }
 
+    @Override
     public void applyDiscounts(List<Campaign> campaigns) {
         this.campaigns.addAll(campaigns);
 
@@ -55,6 +59,7 @@ public class ShoppingCart {
         calculateCampaignDiscount();
     }
 
+    @Override
     public void applyCoupon(Coupon coupon) {
         this.coupon = coupon;
 
@@ -62,7 +67,7 @@ public class ShoppingCart {
         calculateCouponDiscount();
     }
 
-    private void calculateTotalCost() {
+    public void calculateTotalCost() {
         Double total = 0.0;
         for (Item item:items) {
             total += item.getItemCost();
@@ -71,6 +76,7 @@ public class ShoppingCart {
         totalCost = total;
     }
 
+    @Override
     public void calculateCampaignDiscount() {
         for (Campaign campaign:campaigns ) {
             Double discount = 0.0;
@@ -88,6 +94,7 @@ public class ShoppingCart {
         totalAmount = totalCost - campaignDiscount;
     }
 
+    @Override
     public void calculateCouponDiscount() {
         calculateTotalCost();
         calculateCampaignDiscount();
@@ -107,6 +114,7 @@ public class ShoppingCart {
                 '}';
     }
 
+    @Override
     public void print() {
         String products = "";
         for (Map.Entry<String, List<Item>> entry : categories.entrySet()) {

@@ -1,6 +1,6 @@
 package utility;
 
-import model.ShoppingCart;
+import implement.ShoppingCart;
 
 public class DeliveryCostCalculator {
     private Double costPerDelivery;
