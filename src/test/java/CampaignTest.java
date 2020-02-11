@@ -9,7 +9,6 @@ import java.util.*;
 
 public class CampaignTest {
 
-    private Collection<Object> collection;
     private Item item;
 
     private Campaign rateCampaign;

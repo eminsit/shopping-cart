@@ -130,6 +130,14 @@ public class ShoppingCart implements Cart{
         return totalCost;
     }
 
+    public Double getCampaignDiscount() {
+        return campaignDiscount;
+    }
+
+    public Double getCouponDiscount() {
+        return couponDiscount;
+    }
+
     public Map<String, List<Item>> getCategories() {
         return categories;
     }

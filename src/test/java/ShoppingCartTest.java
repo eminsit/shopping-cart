@@ -6,12 +6,18 @@ import model.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.doReturn;
 
 public class ShoppingCartTest {
+
     @InjectMocks
     private ShoppingCart cart;
+
+    @Mock
+    private Coupon coupon;
 
     private Item item;
 
@@ -21,6 +27,7 @@ public class ShoppingCartTest {
     private Product product2;
     private Campaign deviceCampaign;
     private Campaign foodCampaign;
+    private Coupon rateCoupon;
 
     @Before
     public void setUp() {
@@ -33,6 +40,7 @@ public class ShoppingCartTest {
         product = new Product("Apple", 10.0, foodCategory);
         product2 = new Product("Iphone", 1000.0, deviceCategory);
         item = new Item(product, 1);
+        rateCoupon = new Coupon(1, 10.0, DiscountType.Rate);
     }
 
     @Test
@@ -71,9 +79,24 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void cartShouldApplyDiscountOnSameCategories() {
+    public void cartShouldNotApplyDiscountOnSameCategoriesButMinCountIsHigerThenItemCount() {
         cart.addItem(product2, 1);
         cart.applyDiscount(deviceCampaign);
-        assertEquals(, product2.getPrice());
+        assertNotEquals((Double)100.0, cart.getCampaignDiscount());
     }
+
+    @Test
+    public void cartShouldApplyDiscountOnSameCategories() {
+        cart.addItem(product2, 10);
+        cart.applyDiscount(deviceCampaign);
+        assertEquals((Double)100.0, cart.getCampaignDiscount());
+    }
+
+    @Test
+    public void shouldApplyCoupon() {
+        cart.addItem(product, 2);
+        cart.applyCoupon(rateCoupon);
+        assertEquals((Double)2.0, cart.getCouponDiscount());
+    }
+
 }
