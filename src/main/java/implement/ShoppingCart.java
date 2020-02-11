@@ -15,7 +15,6 @@ public class ShoppingCart implements Cart{
     private Double totalCost;
     private Double campaignDiscount = 0.0;
     private Double couponDiscount = 0.0;
-    private Double totalAmount = 0.0;
 
     private Map<String, List<Item>> categories = new HashMap<String, List<Item>>();
 
@@ -42,18 +41,8 @@ public class ShoppingCart implements Cart{
     }
 
     @Override
-    public void applyDiscounts(Campaign campaign1, Campaign campaign2, Campaign campaign3) {
+    public void applyDiscount(Campaign campaign1) {
         campaigns.add(campaign1);
-        campaigns.add(campaign2);
-        campaigns.add(campaign3);
-
-        calculateTotalCost();
-        calculateCampaignDiscount();
-    }
-
-    @Override
-    public void applyDiscounts(List<Campaign> campaigns) {
-        this.campaigns.addAll(campaigns);
 
         calculateTotalCost();
         calculateCampaignDiscount();
@@ -67,6 +56,7 @@ public class ShoppingCart implements Cart{
         calculateCouponDiscount();
     }
 
+    @Override
     public void calculateTotalCost() {
         Double total = 0.0;
         for (Item item:items) {
@@ -91,15 +81,13 @@ public class ShoppingCart implements Cart{
                 campaignDiscount = discount;
             }
         }
-        totalAmount = totalCost - campaignDiscount;
     }
 
     @Override
     public void calculateCouponDiscount() {
         calculateTotalCost();
         calculateCampaignDiscount();
-        couponDiscount = coupon.getDiscountValue(totalAmount);
-        totalAmount = totalAmount - campaignDiscount;
+        couponDiscount = coupon.getDiscountValue(totalCost - campaignDiscount);
     }
 
     @Override
@@ -127,8 +115,10 @@ public class ShoppingCart implements Cart{
                     ", Totatl Cost: " + item.getItemCost() + "\n";
             }
         }
-        products += "Total Cost: " + totalCost + "\n";
-        products += "Total Amount: " + totalAmount + "\n";
+        products += "Total Cost: " + totalCost + "\n" +
+                    "Campaign Discount: " + campaignDiscount + "\n" +
+                    "Campaign Discount: " + couponDiscount + "\n" +
+                    "Total Amount: " + (totalCost - couponDiscount - campaignDiscount) + "\n";
         System.out.println(products);
     }
 

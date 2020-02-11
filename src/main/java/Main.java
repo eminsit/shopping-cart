@@ -12,13 +12,14 @@ public class Main {
         ShoppingCart cart = new ShoppingCart();
         cart.addItem(apple, 3);
         cart.addItem(almonds, 1);
-        //cart.addItem(almonds, 5);
 
         Campaign campaign1 = new Campaign(foodCategory, 20.0, 3, DiscountType.Rate);
         Campaign campaign2 = new Campaign(foodCategory, 50.0, 5, DiscountType.Rate);
         Campaign campaign3 = new Campaign(foodCategory, 20.0, 3, DiscountType.Rate);
 
-        cart.applyDiscounts(campaign1, campaign2, campaign3);
+        cart.applyDiscount(campaign1);
+        cart.applyDiscount(campaign2);
+        cart.applyDiscount(campaign3);
 
         Coupon coupon = new Coupon(100, 10.0, DiscountType.Rate);
         cart.applyCoupon(coupon);

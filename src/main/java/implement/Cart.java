@@ -10,9 +10,7 @@ public interface Cart {
 
     void addItem(Product product, Integer productCount);
 
-    void applyDiscounts(Campaign campaign1, Campaign campaign2, Campaign campaign3);
-
-    void applyDiscounts(List<Campaign> campaigns);
+    void applyDiscount(Campaign campaign1);
 
     void applyCoupon(Coupon coupon);
 
