@@ -126,6 +126,10 @@ public class ShoppingCart implements Cart{
         return items;
     }
 
+    public Double getTotalCost() {
+        return totalCost;
+    }
+
     public Map<String, List<Item>> getCategories() {
         return categories;
     }

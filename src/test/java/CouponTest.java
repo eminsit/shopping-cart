@@ -9,7 +9,6 @@ import static org.junit.Assert.assertEquals;
 
 public class CouponTest {
 
-    private Collection<Object> collection;
     private Item item;
 
     private Coupon rateCoupon;
